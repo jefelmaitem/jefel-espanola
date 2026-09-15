@@ -18,8 +18,8 @@ export function HomeHero() {
           <img
             src={publicAsset("jefel-portrait.jpg")}
             alt="Portrait of Jefel Española"
-            width={640}
-            height={639}
+            width={960}
+            height={960}
             className="hero-avatar intro-enter"
             loading="eager"
             decoding="async"

@@ -1,0 +1,16 @@
+{
+  "jefel-arts-preview.jpg": { "width": 1400, "height": 1400, "type": "image/jpeg" },
+  "webproject1.png": { "width": 1920, "height": 1415, "type": "image/png" },
+  "arkad1.jpeg": { "width": 1080, "height": 1080, "type": "image/jpeg" },
+  "ark2.png": { "width": 1920, "height": 1415, "type": "image/png" },
+  "poster-1.jpg": { "width": 1080, "height": 1350, "type": "image/jpeg" },
+  "poster-2.jpg": { "width": 1290, "height": 1614, "type": "image/jpeg" },
+  "poster-3.jpg": { "width": 1080, "height": 1350, "type": "image/jpeg" },
+  "apbr1.jpg": { "width": 1120, "height": 1400, "type": "image/jpeg" },
+  "apbr2.jpg": { "width": 1120, "height": 1400, "type": "image/jpeg" },
+  "ceap1.jpg": { "width": 1400, "height": 787, "type": "image/jpeg" },
+  "surcol1.jpg": { "width": 1400, "height": 1400, "type": "image/jpeg" },
+  "max1.jpg": { "width": 1119, "height": 1400, "type": "image/jpeg" },
+  "ant1.jpg": { "width": 1119, "height": 1400, "type": "image/jpeg" },
+  "yg1.jpg": { "width": 1400, "height": 1400, "type": "image/jpeg" }
+}

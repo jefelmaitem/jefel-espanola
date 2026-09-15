@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { getImageMetadata } from "../lib/assets";
 import {
   absoluteRouteUrl,
   getSeoForPath,
@@ -54,6 +55,7 @@ export function RouteSeo() {
     const seo = getSeoForPath(location.pathname);
     const canonicalUrl = absoluteRouteUrl(seo.path);
     const image = seoImageFor(seo);
+    const imageMetadata = getImageMetadata(image);
     const imageAlt = seoImageAltFor(seo);
 
     document.title = seo.title;
@@ -68,9 +70,9 @@ export function RouteSeo() {
     upsertMeta("property", "og:url", canonicalUrl);
     upsertMeta("property", "og:site_name", siteName);
     upsertMeta("property", "og:image", image);
-    upsertMeta("property", "og:image:type", "image/jpeg");
-    upsertMeta("property", "og:image:width", "1400");
-    upsertMeta("property", "og:image:height", "1400");
+    upsertMeta("property", "og:image:type", imageMetadata.type);
+    upsertMeta("property", "og:image:width", String(imageMetadata.width));
+    upsertMeta("property", "og:image:height", String(imageMetadata.height));
     upsertMeta("property", "og:image:alt", imageAlt);
 
     upsertMeta("name", "twitter:card", "summary_large_image");
@@ -132,8 +134,8 @@ export function RouteSeo() {
           primaryImageOfPage: {
             "@type": "ImageObject",
             url: image,
-            width: 1400,
-            height: 1400,
+            width: imageMetadata.width,
+            height: imageMetadata.height,
             caption: imageAlt,
           },
         },

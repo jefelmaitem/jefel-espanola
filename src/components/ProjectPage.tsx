@@ -1,7 +1,7 @@
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { getProjectBySlug } from "../data/experience";
-import { publicAsset } from "../lib/assets";
+import { getImageMetadata, publicAsset } from "../lib/assets";
 import { ModeToggle } from "./mode-toggle";
 
 function ProjectMeta({ label, value }: { label: string; value: string }) {
@@ -18,14 +18,16 @@ export function ProjectPage() {
   const project = projectSlug ? getProjectBySlug(projectSlug) : undefined;
 
   if (!project) {
-    return <Navigate to="/#work" replace />;
+    return <Navigate to="/#experience" replace />;
   }
+
+  const { width, height } = getImageMetadata(project.image);
 
   return (
     <main className="project-page min-h-screen">
       <div className="page-container">
         <div className="project-page-nav">
-          <Link to="/#work" className="section-back-link slide-fade-up">
+          <Link to="/#experience" className="section-back-link slide-fade-up">
             <ArrowLeft aria-hidden="true" size={18} strokeWidth={1.75} />
             <span>Back to work</span>
           </Link>
@@ -47,6 +49,8 @@ export function ProjectPage() {
           <img
             src={publicAsset(project.image)}
             alt={project.imageAlt ?? project.name}
+            width={width}
+            height={height}
             className="project-page-image"
             decoding="async"
           />

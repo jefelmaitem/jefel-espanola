@@ -8,6 +8,9 @@ const distRoot = path.join(projectRoot, "dist");
 const indexPath = path.join(distRoot, "index.html");
 const seoConfigPath = path.join(projectRoot, "src/data/seoRoutes.json");
 const seoConfig = JSON.parse(await readFile(seoConfigPath, "utf8"));
+const imageMetadata = JSON.parse(
+  await readFile(path.join(projectRoot, "src/data/imageMetadata.json"), "utf8"),
+);
 const {
   siteUrl,
   siteName,
@@ -30,6 +33,13 @@ function escapeRegExp(value) {
 
 function absoluteUrl(routePath) {
   return routePath === "/" ? `${siteUrl}/` : `${siteUrl}${routePath}`;
+}
+
+function metadataForImage(image) {
+  const filename = image.slice(image.lastIndexOf("/") + 1);
+  const metadata = imageMetadata[filename];
+  if (!metadata) throw new Error(`Missing image metadata for ${filename}.`);
+  return metadata;
 }
 
 function replaceOrInsertTag(html, tagPattern, replacement) {
@@ -65,6 +75,7 @@ function schemaForRoute(route) {
   const canonicalUrl = absoluteUrl(route.path);
   const image = route.image ?? defaultImage;
   const imageAlt = route.imageAlt ?? defaultImageAlt;
+  const { width, height } = metadataForImage(image);
 
   return {
     "@context": "https://schema.org",
@@ -119,8 +130,8 @@ function schemaForRoute(route) {
         primaryImageOfPage: {
           "@type": "ImageObject",
           url: image,
-          width: 1400,
-          height: 1400,
+          width,
+          height,
           caption: imageAlt,
         },
       },
@@ -143,6 +154,7 @@ function withRouteMetadata(template, route) {
   const canonicalUrl = absoluteUrl(route.path);
   const image = route.image ?? defaultImage;
   const imageAlt = route.imageAlt ?? defaultImageAlt;
+  const { type, width, height } = metadataForImage(image);
 
   let html = template.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(route.title)}</title>`);
   html = setMeta(html, "name", "description", route.description);
@@ -154,9 +166,9 @@ function withRouteMetadata(template, route) {
   html = setMeta(html, "property", "og:url", canonicalUrl);
   html = setMeta(html, "property", "og:site_name", siteName);
   html = setMeta(html, "property", "og:image", image);
-  html = setMeta(html, "property", "og:image:type", "image/jpeg");
-  html = setMeta(html, "property", "og:image:width", "1400");
-  html = setMeta(html, "property", "og:image:height", "1400");
+  html = setMeta(html, "property", "og:image:type", type);
+  html = setMeta(html, "property", "og:image:width", String(width));
+  html = setMeta(html, "property", "og:image:height", String(height));
   html = setMeta(html, "property", "og:image:alt", imageAlt);
   html = setMeta(html, "name", "twitter:card", "summary_large_image");
   html = setMeta(html, "name", "twitter:title", route.title);
