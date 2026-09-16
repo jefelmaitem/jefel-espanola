@@ -10,7 +10,15 @@ function ExperienceItem({ job }: { job: ExperienceEntry }) {
   return (
     <ResumeEntry
       title={job.company}
-      subtitle={job.title}
+      subtitle={
+        <ul className="experience-role-list" aria-label="Roles" role="list">
+          {job.roles.map((role) => (
+            <li className="experience-role-tag" key={role}>
+              {role}
+            </li>
+          ))}
+        </ul>
+      }
       date={job.timeframe}
       details={job.responsibilities}
       logo={
@@ -18,6 +26,7 @@ function ExperienceItem({ job }: { job: ExperienceEntry }) {
           <img
             src={logoSrc}
             alt={job.company}
+            className={job.logoIsWhite ? "resume-entry-logo-white" : undefined}
             loading="lazy"
             decoding="async"
           />

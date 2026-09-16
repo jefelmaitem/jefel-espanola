@@ -344,6 +344,10 @@ body {
   object-fit: contain;
 }
 
+:root:not(.dark) .resume-entry-logo-white {
+  filter: brightness(0);
+}
+
 .resume-entry-heading {
   min-width: 0;
   overflow-wrap: anywhere;
@@ -378,8 +382,27 @@ body {
   margin-top: 0.375rem;
 }
 
+.experience-role-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  list-style: none;
+}
+
+.experience-role-tag {
+  max-width: 100%;
+  border: 0;
+  border-radius: theme("borderRadius.md");
+  padding: 0.125rem 0.625rem;
+  background: color-mix(in srgb, var(--bg-primary) 98%, var(--text-primary));
+  color: var(--text-secondary);
+  font-size: var(--font-size-control);
+  line-height: 1.5;
+}
+
 .resume-entry-details {
   --resume-connector: color-mix(in srgb, var(--text-muted) 45%, transparent);
+  --resume-connector-radius: theme("borderRadius.md");
   margin-top: 0.75rem;
   margin-left: 1.875rem;
   padding-left: 0;
@@ -411,9 +434,12 @@ body {
 }
 
 .resume-entry-details li::after {
-  top: 0.75rem;
+  top: calc(0.75rem - var(--resume-connector-radius));
   width: 1rem;
-  border-top: 1px solid var(--resume-connector);
+  height: calc(var(--resume-connector-radius) + 1px);
+  border-left: 1px solid var(--resume-connector);
+  border-bottom: 1px solid var(--resume-connector);
+  border-bottom-left-radius: var(--resume-connector-radius);
 }
 
 .resume-entry-details li:last-child {
@@ -422,7 +448,7 @@ body {
 
 .resume-entry-details li:last-child::before {
   bottom: auto;
-  height: 0.75rem;
+  height: calc(0.75rem - var(--resume-connector-radius));
 }
 
 .skill-row {
@@ -687,6 +713,57 @@ body {
   gap: 0.5rem;
 }
 
+.hero-chat {
+  position: relative;
+  display: inline-flex;
+  justify-self: start;
+}
+
+.hero-chat-tooltip {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 100%;
+  width: max-content;
+  max-width: calc(100vw - 2 * var(--page-gutter) - 100%);
+  padding-left: 0.75rem;
+  color: var(--text-muted);
+  font-size: var(--font-size-control);
+  line-height: 1.5;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: visibility 0s linear 180ms;
+}
+
+.hero-chat-tooltip[data-open="true"] {
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+.hero-chat-tooltip-word {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(2px);
+  transform: translate(-0.5rem, 0.125rem);
+  transition:
+    opacity 140ms ease-out,
+    filter 160ms ease-out,
+    transform 180ms ease-in;
+}
+
+.hero-chat-tooltip[data-open="true"] .hero-chat-tooltip-word {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate(0, 0);
+  transition:
+    opacity 240ms ease-out,
+    filter 360ms ease-out,
+    transform 460ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--word-index) * 24ms);
+}
+
 .shining-text {
   color: var(--shine-text-color);
   background: repeating-linear-gradient(
@@ -941,6 +1018,9 @@ body {
     -webkit-text-fill-color: currentColor;
   }
 
+  .hero-chat-tooltip,
+  .hero-chat-tooltip .hero-chat-tooltip-word,
+  .hero-chat-tooltip[data-open="true"] .hero-chat-tooltip-word,
   .expandable-panel,
   .section-toggle-icon,
   .expandable-panel .resume-entry,

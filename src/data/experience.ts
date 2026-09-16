@@ -11,13 +11,13 @@ export type ExperienceProject = {
 export type ExperienceEntry = {
   slug: string;
   company: string;
-  title: string;
+  roles: readonly string[];
   summary: string;
   responsibilities: readonly string[];
-  role: string;
   timeframe: string;
   tools: readonly string[];
   logo?: string;
+  logoIsWhite?: boolean;
   projects: readonly ExperienceProject[];
 };
 
@@ -25,7 +25,12 @@ const experiences: ExperienceEntry[] = [
   {
     slug: "ark-design",
     company: "Ark Design B.V.",
-    title: "Graphic & UI/Web Designer",
+    roles: [
+      "Graphic Designer",
+      "UI/Web Designer",
+      "WordPress Developer",
+      "SMM",
+    ],
     summary:
       "Designing responsive websites, digital campaigns, and brand systems with a focus on clarity, usability, and polished visual presentation.",
     responsibilities: [
@@ -36,7 +41,6 @@ const experiences: ExperienceEntry[] = [
       "Build and maintain websites using WordPress",
       "Manage social media content and creatives",
     ],
-    role: "Graphic Designer, UI/WEB Design, WordPress Developer, SMM",
     timeframe: "2024 – Present",
     tools: ["WordPress", "Elementor", "UI Design", "Branding"],
     logo: "ark-design.png",
@@ -73,7 +77,7 @@ const experiences: ExperienceEntry[] = [
   {
     slug: "tnc-kaiserin",
     company: "TNC Kaiserin",
-    title: "Head Designer",
+    roles: ["Graphic Designer"],
     summary:
       "Led visual design for esports campaigns, promotional assets, and branded content built to energize the audience and strengthen team identity.",
     responsibilities: [
@@ -81,7 +85,6 @@ const experiences: ExperienceEntry[] = [
       "Create promotional materials",
       "Support branding initiatives",
     ],
-    role: "Graphic Designer",
     timeframe: "March 2024 - June 2024",
     tools: ["Campaign Design", "Posters", "Branding", "Social Graphics"],
     logo: "tnc-kaiserin.png",
@@ -118,14 +121,13 @@ const experiences: ExperienceEntry[] = [
   {
     slug: "bren-esports",
     company: "Bren Esports - Shizou",
-    title: "Player-specific Graphic Designer",
+    roles: ["Graphic Designer"],
     summary:
       "Created branded player content and promotional visuals tailored to a professional esports identity, with fast-turnaround execution for social media moments.",
     responsibilities: [
       "Create branded content for professional player Shizou",
       "Design player-specific visuals for Bren Esports",
     ],
-    role: "Graphic Designer",
     timeframe: "Feb 2024 - April 2024",
     tools: ["Player Branding", "Posters", "Social Graphics"],
     logo: "ap-bren.png",
@@ -153,7 +155,7 @@ const experiences: ExperienceEntry[] = [
   {
     slug: "surigao-esports-collective",
     company: "Surigao Esports Collective",
-    title: "Head Designer",
+    roles: ["Graphic Designer"],
     summary:
       "Directed visual design across broadcasts, social content, and event promotions to give the organization a stronger and more cohesive competitive identity.",
     responsibilities: [
@@ -161,10 +163,10 @@ const experiences: ExperienceEntry[] = [
       "Create social media content and promotional posters",
       "Develop brand assets for the organization",
     ],
-    role: "Graphic Designer",
     timeframe: "2023 – 2024",
     tools: ["Broadcast Visuals", "League Branding", "Posters", "Social Graphics"],
     logo: "surigao-esports.png",
+    logoIsWhite: true,
     projects: [
       {
         slug: "surigao-esports-ceap",
@@ -189,7 +191,7 @@ const experiences: ExperienceEntry[] = [
   {
     slug: "jefel-arts",
     company: "Jefel Arts",
-    title: "Freelance Visual Designer",
+    roles: ["Graphic Designer"],
     summary:
       "Producing custom commission work for streetwear, esports, and merchandise brands through expressive visuals, apparel graphics, and campaign-led design pieces.",
     responsibilities: [
@@ -197,7 +199,6 @@ const experiences: ExperienceEntry[] = [
       "Design graphics for streetwear and merchandise brands",
       "Produce creative assets for esports brands",
     ],
-    role: "Graphic Designer",
     timeframe: "2022 – Present",
     tools: ["Apparel Design", "Commission Work", "Merch Graphics", "Posters"],
     logo: "jefel-arts-preview.jpg",
@@ -273,7 +274,7 @@ export const portfolioProjects: PortfolioProject[] = experienceEntries.flatMap(
       ...project,
       client: experience.company,
       clientSlug: experience.slug,
-      role: experience.role,
+      role: experience.roles.join(", "),
       timeframe: experience.timeframe,
       tools: experience.tools,
     })),

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 type ResumeEntryProps = {
   title: string;
-  subtitle: string;
+  subtitle: ReactNode;
   date: string;
   logo: ReactNode;
   details: readonly string[];
@@ -26,7 +26,7 @@ export function ResumeEntry({
             <span className="resume-entry-leader" aria-hidden="true" />
             <p className="resume-entry-date">{date}</p>
           </div>
-          <p className="resume-entry-subtitle">{subtitle}</p>
+          <div className="resume-entry-subtitle">{subtitle}</div>
         </div>
       </div>
 
