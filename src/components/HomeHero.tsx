@@ -1,4 +1,3 @@
-import { Fragment, type CSSProperties, useEffect, useId, useState } from "react";
 import { AnimatedRole } from "./AnimatedRole";
 import { Mail } from "lucide-react";
 import { publicAsset } from "../lib/assets";
@@ -6,37 +5,11 @@ import { LinkedinIconLink } from "./LinkedinLink";
 import { ModeToggle } from "./mode-toggle";
 import { Button } from "./ui/button";
 
-const chatTooltipWords = "Go on, I don’t bite :)".split(" ");
-
 function ChatButton() {
-  const tooltipId = useId();
-  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
-
-  useEffect(() => {
-    if (!isTooltipOpen) return;
-
-    const dismissTooltip = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsTooltipOpen(false);
-    };
-
-    document.addEventListener("keydown", dismissTooltip);
-    return () => document.removeEventListener("keydown", dismissTooltip);
-  }, [isTooltipOpen]);
-
   return (
-    <div
-      className="hero-chat"
-      onMouseEnter={() => setIsTooltipOpen(true)}
-      onMouseLeave={() => setIsTooltipOpen(false)}
-    >
+    <div className="hero-chat">
       <Button asChild className="h-auto gap-1.5 px-3 py-1">
-        <a
-          href="mailto:jefel.maitem@gmail.com"
-          aria-describedby={tooltipId}
-          onFocus={() => setIsTooltipOpen(true)}
-          onBlur={() => setIsTooltipOpen(false)}
-          onClick={() => setIsTooltipOpen(false)}
-        >
+        <a href="mailto:jefel.maitem@gmail.com">
           <Mail
             aria-hidden="true"
             size={15}
@@ -46,25 +19,6 @@ function ChatButton() {
           <span>Let’s chat</span>
         </a>
       </Button>
-      <span
-        id={tooltipId}
-        role="tooltip"
-        className="hero-chat-tooltip"
-        data-open={isTooltipOpen}
-        aria-hidden={!isTooltipOpen}
-      >
-        {chatTooltipWords.map((word, index) => (
-          <Fragment key={`${word}-${index}`}>
-            {index > 0 && " "}
-            <span
-              className="hero-chat-tooltip-word"
-              style={{ "--word-index": index } as CSSProperties}
-            >
-              {word}
-            </span>
-          </Fragment>
-        ))}
-      </span>
     </div>
   );
 }
