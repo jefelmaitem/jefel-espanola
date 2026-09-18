@@ -669,7 +669,6 @@ body {
   border-radius: var(--radius-xs);
   object-fit: cover;
   opacity: 0.9;
-  box-shadow: 0 0 0 1px var(--ui-border);
   transition: opacity var(--duration-normal) var(--ease-standard);
 }
 

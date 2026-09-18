@@ -34,12 +34,10 @@ const experiences: ExperienceEntry[] = [
     summary:
       "Designing responsive websites, digital campaigns, and brand systems with a focus on clarity, usability, and polished visual presentation.",
     responsibilities: [
-      "Design responsive WordPress websites",
-      "Create UI/UX for websites and software",
-      "Produce social media content and digital ads",
-      "Develop branding and visual identities",
-      "Build and maintain websites using WordPress",
-      "Manage social media content and creatives",
+      "Design and develop WordPress websites",
+      "Manage social media and paid advertising projects for clients",
+      "Design UI/UX for web and software projects",
+      "Create branding and logo identities for client projects",
     ],
     timeframe: "2024 – Present",
     tools: ["WordPress", "Elementor", "UI Design", "Branding"],
@@ -81,11 +79,10 @@ const experiences: ExperienceEntry[] = [
     summary:
       "Led visual design for esports campaigns, promotional assets, and branded content built to energize the audience and strengthen team identity.",
     responsibilities: [
-      "Lead graphic design projects",
-      "Create promotional materials",
-      "Support branding initiatives",
+      "Designed key visuals",
+      "Created publication materials",
     ],
-    timeframe: "March 2024 - June 2024",
+    timeframe: "March 2025 – June 2025",
     tools: ["Campaign Design", "Posters", "Branding", "Social Graphics"],
     logo: "tnc-kaiserin.png",
     projects: [
@@ -125,10 +122,10 @@ const experiences: ExperienceEntry[] = [
     summary:
       "Created branded player content and promotional visuals tailored to a professional esports identity, with fast-turnaround execution for social media moments.",
     responsibilities: [
-      "Create branded content for professional player Shizou",
-      "Design player-specific visuals for Bren Esports",
+      "Designed key visuals",
+      "Created publication materials",
     ],
-    timeframe: "Feb 2024 - April 2024",
+    timeframe: "Feb 2025 – April 2025",
     tools: ["Player Branding", "Posters", "Social Graphics"],
     logo: "ap-bren.png",
     projects: [
@@ -153,15 +150,33 @@ const experiences: ExperienceEntry[] = [
     ],
   },
   {
+    slug: "dinagat-island-esports",
+    company: "Dinagat Island Esports",
+    roles: ["Graphic Designer"],
+    summary:
+      "Designed key visuals; Designed broadcast HUD graphics; Created publication materials; Co-managed technical production and broadcasts.",
+    responsibilities: [
+      "Designed key visuals",
+      "Designed broadcast HUD graphics",
+      "Created publication materials",
+      "Co-managed technical production and broadcasts",
+    ],
+    timeframe: "August 2025 – September 2025",
+    tools: ["Broadcast Visuals", "Social Graphics", "Technical Production"],
+    logo: "Dinagat Island Esports.webp",
+    projects: [],
+  },
+  {
     slug: "surigao-esports-collective",
     company: "Surigao Esports Collective",
     roles: ["Graphic Designer"],
     summary:
       "Directed visual design across broadcasts, social content, and event promotions to give the organization a stronger and more cohesive competitive identity.",
     responsibilities: [
-      "Lead design for broadcast graphics",
-      "Create social media content and promotional posters",
-      "Develop brand assets for the organization",
+      "Designed key visuals",
+      "Designed broadcast HUD graphics",
+      "Created publication materials",
+      "Co-managed technical production and broadcasts",
     ],
     timeframe: "2023 – 2024",
     tools: ["Broadcast Visuals", "League Branding", "Posters", "Social Graphics"],
@@ -195,9 +210,9 @@ const experiences: ExperienceEntry[] = [
     summary:
       "Producing custom commission work for streetwear, esports, and merchandise brands through expressive visuals, apparel graphics, and campaign-led design pieces.",
     responsibilities: [
-      "Create custom commission-based designs",
-      "Design graphics for streetwear and merchandise brands",
-      "Produce creative assets for esports brands",
+      "Design apparel graphics",
+      "Create branding and logo identities",
+      "Produce custom graphic design projects",
     ],
     timeframe: "2022 – Present",
     tools: ["Apparel Design", "Commission Work", "Merch Graphics", "Posters"],
@@ -235,14 +250,24 @@ const experiences: ExperienceEntry[] = [
 ];
 
 function extractPeriodRanking(period: string) {
-  const years = Array.from(period.matchAll(/\d{4}/g)).map((match) =>
-    Number(match[0]),
+  const months = [
+    "jan", "feb", "mar", "apr", "may", "jun",
+    "jul", "aug", "sep", "oct", "nov", "dec",
+  ];
+  const dates = Array.from(
+    period.matchAll(/(?:([A-Za-z]+)\s+)?(\d{4})/g),
+    ([, month, year]) => {
+      const monthRank = month
+        ? months.indexOf(month.slice(0, 3).toLowerCase()) + 1
+        : 0;
+      return Number(year) * 12 + monthRank;
+    },
   );
-  const latestYear = years.length ? Math.max(...years) : 0;
-  const startYear = years[0] ?? 0;
+  const latestDate = dates.length ? Math.max(...dates) : 0;
+  const startDate = dates[0] ?? 0;
   const isCurrent = /present/i.test(period);
 
-  return { isCurrent, latestYear, startYear };
+  return { isCurrent, latestDate, startDate };
 }
 
 export const experienceEntries = [...experiences].sort((a, b) => {
@@ -253,11 +278,11 @@ export const experienceEntries = [...experiences].sort((a, b) => {
     return Number(right.isCurrent) - Number(left.isCurrent);
   }
 
-  if (left.latestYear !== right.latestYear) {
-    return right.latestYear - left.latestYear;
+  if (left.latestDate !== right.latestDate) {
+    return right.latestDate - left.latestDate;
   }
 
-  return right.startYear - left.startYear;
+  return right.startDate - left.startDate;
 });
 
 export type PortfolioProject = ExperienceProject & {
